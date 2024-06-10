@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 class CardViewModel: ObservableObject {
     @Published var cards: [Card] = [
         Card(question: "What is the capital of France?", answer: "Paris", nextReviewDate: Date(), interval: 0),
@@ -15,8 +16,12 @@ class CardViewModel: ObservableObject {
     
     @Published var currentCardIndex: Int = 0
     @Published var showAnswer: Bool = false
+    @Published var allCardsReviewed: Bool = false  // 全てのカードがレビューされたかどうかを保持
     
-    var currentCard: Card {
+    var currentCard: Card? {
+        if cards.isEmpty {
+            return nil
+        }
         return cards[currentCardIndex]
     }
     
@@ -24,10 +29,11 @@ class CardViewModel: ObservableObject {
         let now = Date()
         if let nextIndex = cards.enumerated().filter({ $0.element.nextReviewDate <= now }).map({ $0.offset }).first {
             currentCardIndex = nextIndex
+            showAnswer = false
+            allCardsReviewed = false  // 次のカードが見つかったのでフラグをリセット
         } else {
-            currentCardIndex = 0
+            allCardsReviewed = true  // 次のカードが見つからなかった場合
         }
-        showAnswer = false
     }
     
     func flipCard() {
@@ -40,19 +46,21 @@ class CardViewModel: ObservableObject {
         
         switch difficulty {
         case "easy":
-            newInterval = currentCard.interval == 0 ? 60 * 60 : currentCard.interval * 2 // 初回1時間、その後倍増
+            newInterval = currentCard?.interval == 0 ? 60 * 60 : currentCard!.interval * 2
         case "good":
-            newInterval = currentCard.interval == 0 ? 30 * 60 : currentCard.interval * 1.5 // 初回30分、その後1.5倍
+            newInterval = currentCard?.interval == 0 ? 30 * 60 : currentCard!.interval * 1.5
         case "hard":
-            newInterval = currentCard.interval == 0 ? 10 * 60 : currentCard.interval // 初回10分、その後同じ間隔
+            newInterval = currentCard?.interval == 0 ? 10 * 60 : currentCard!.interval
         case "again":
-            newInterval = 1 * 60 // 再学習は1分後
+            newInterval = 1 * 60
         default:
-            newInterval = currentCard.interval
+            newInterval = currentCard?.interval ?? 0
         }
         
-        cards[currentCardIndex].interval = newInterval
-        cards[currentCardIndex].nextReviewDate = now.addingTimeInterval(newInterval)
+        if let index = currentCardIndex as Int? {
+            cards[index].interval = newInterval
+            cards[index].nextReviewDate = now.addingTimeInterval(newInterval)
+        }
         
         nextCard()
     }

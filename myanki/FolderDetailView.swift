@@ -69,36 +69,15 @@ struct FolderDetailView: View {
             }
             .navigationTitle(folder.name)
             .toolbar {
-                EditButton()
+                HStack{
+                    Button(action: {
+                        showingAddCardView = true
+                    }) {
+                        Image(systemName: "plus")
+                    }
+                    EditButton()
+                }
             }
-            
-            // カード追加ボタン
-            Button(action: {
-                showingAddCardView = true
-            }) {
-                Text("Add Card")
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
-            .padding()
-            .sheet(isPresented: $showingAddCardView) {
-                AddCardView(viewModel: viewModel, folder: folder)
-            }
-            
-//            // フォルダー名編集シート
-//            EditFolderNameView(folderName: $newFolderName, isPresented: $isEditingFolderName) {
-//                viewModel.updateFolderName(folder: folder, newName: newFolderName)
-//            }
-//            
-//            // カード編集シート
-//            if let card = editingCard {
-//                EditCardView(question: $editingQuestion, answer: $editingAnswer, isPresented: $showingEditCardView) {
-//                    viewModel.updateCard(folder: folder, card: card, newQuestion: editingQuestion, newAnswer: editingAnswer)
-//                }
-//            }
-            
             // レビュー開始ボタン
             Button(action: {
                 startReview = true
@@ -122,6 +101,9 @@ struct FolderDetailView: View {
                     viewModel.updateCard(folder: folder, card: card, newQuestion: editingQuestion, newAnswer: editingAnswer)
                 }
             }
+        }
+        .sheet(isPresented: $showingAddCardView) {
+            AddCardView(viewModel: viewModel, folder: folder)
         }
     }
 }

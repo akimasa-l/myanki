@@ -26,26 +26,21 @@ struct Sidebar: View {
     @Binding var showingAddFolderView: Bool
     
     var body: some View {
-        VStack {
+        List {
+            ForEach(viewModel.folders) { folder in
+                NavigationLink(destination: FolderDetailView(viewModel: viewModel, folder: folder)) {
+                    Text(folder.name)
+                }
+            }
+            .onDelete(perform: viewModel.removeFolder)
+        }
+        .toolbar{
             Button(action: {
                 showingAddFolderView = true
             }) {
-                Text("Add Folder")
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+                Image(systemName: "plus")
             }
             .padding()
-            
-            List {
-                ForEach(viewModel.folders) { folder in
-                    NavigationLink(destination: FolderDetailView(viewModel: viewModel, folder: folder)) {
-                        Text(folder.name)
-                    }
-                }
-                .onDelete(perform: viewModel.removeFolder)
-            }
         }
         .navigationTitle("Folders")
         .sheet(isPresented: $showingAddFolderView) {

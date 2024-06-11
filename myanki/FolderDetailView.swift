@@ -70,11 +70,13 @@ struct FolderDetailView: View {
                 }
             }
             
-//            // フォルダー名編集シート
-//            EditFolderNameView(folderName: $newFolderName, isPresented: $showingEditFolderName) {
-//                viewModel.updateFolderName(folder: folder, newName: newFolderName)
-//            }
-            
+            //            // フォルダー名編集シート
+            //            EditFolderNameView(folderName: $newFolderName, isPresented: $showingEditFolderName) {
+            //                viewModel.updateFolderName(folder: folder, newName: newFolderName)
+            //            }
+            NavigationLink(destination: ReviewView(viewModel: viewModel, folder: folder), isActive: $startReview) {
+                EmptyView()
+            }
             // レビュー開始ボタン
             Button(action: {
                 startReview = true

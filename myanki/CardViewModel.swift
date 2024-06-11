@@ -1,5 +1,5 @@
 //
-//  viewmodel.swift
+//  CardViewModel.swift
 //  myanki
 //
 //  Created by 劉明正 on 2024/06/10.

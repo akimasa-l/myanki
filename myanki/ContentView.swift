@@ -90,24 +90,13 @@ struct ContentView: View {
                         .cornerRadius(10)
                 }
                 .padding()
-                
-                List {
-                    ForEach(viewModel.cards) { card in
-                        VStack(alignment: .leading) {
-                            Text(card.question)
-                                .font(.headline)
-                            Text(card.answer)
-                                .font(.subheadline)
-                        }
-                    }
-                    .onDelete(perform: viewModel.removeCard)
-                }
             }
             .navigationTitle("Anki Clone")
             .sheet(isPresented: $showingAddCardView) {
                 AddCardView(viewModel: viewModel)
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle()) // iPadで質問がメイン画面に表示されるようにする
     }
 }
 

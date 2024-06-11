@@ -10,11 +10,10 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var viewModel = FolderViewModel()
     @State private var showingAddFolderView = false
-    @State private var showingAddCardView = false
     
     var body: some View {
         NavigationView {
-            Sidebar(viewModel: viewModel, showingAddFolderView: $showingAddFolderView, showingAddCardView: $showingAddCardView)
+            Sidebar(viewModel: viewModel, showingAddFolderView: $showingAddFolderView)
             MainView(viewModel: viewModel)
         }
     }
@@ -23,7 +22,6 @@ struct ContentView: View {
 struct Sidebar: View {
     @ObservedObject var viewModel: FolderViewModel
     @Binding var showingAddFolderView: Bool
-    @Binding var showingAddCardView: Bool
     
     var body: some View {
         VStack {
@@ -57,6 +55,7 @@ struct Sidebar: View {
 struct FolderDetailView: View {
     @ObservedObject var viewModel: FolderViewModel
     let folder: Folder
+    @State private var showingAddCardView = false
     
     var body: some View {
         VStack {
@@ -74,6 +73,20 @@ struct FolderDetailView: View {
                 }
             }
             .navigationTitle(folder.name)
+            
+            Button(action: {
+                showingAddCardView = true
+            }) {
+                Text("Add Card")
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            .padding()
+            .sheet(isPresented: $showingAddCardView) {
+                AddCardView(viewModel: viewModel, folder: folder)
+            }
             
             Button(action: {
                 viewModel.currentFolderIndex = viewModel.folders.firstIndex(where: { $0.id == folder.id })
@@ -155,7 +168,6 @@ struct MainView: View {
                                 .background(Color.green)
                                 .foregroundColor(.white)
                                 .cornerRadius(10)
-                                .multilineTextAlignment(.center)
                         }
                     }
                     .padding()

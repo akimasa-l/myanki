@@ -13,6 +13,8 @@
 		3F2BAF292C172AB9002EFA85 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F2BAF282C172AB9002EFA85 /* Preview Assets.xcassets */; };
 		3F2BAF302C172BFA002EFA85 /* CardAndFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BAF2F2C172BF9002EFA85 /* CardAndFolder.swift */; };
 		3F2BAF322C172C35002EFA85 /* FolderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BAF312C172C35002EFA85 /* FolderViewModel.swift */; };
+		3F806E3F2C17FD7500B14269 /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F806E3E2C17FD7500B14269 /* ReviewView.swift */; };
+		3F806E412C17FDD300B14269 /* FolderDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F806E402C17FDD300B14269 /* FolderDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		3F2BAF282C172AB9002EFA85 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3F2BAF2F2C172BF9002EFA85 /* CardAndFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardAndFolder.swift; sourceTree = "<group>"; };
 		3F2BAF312C172C35002EFA85 /* FolderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderViewModel.swift; sourceTree = "<group>"; };
+		3F806E3E2C17FD7500B14269 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
+		3F806E402C17FDD300B14269 /* FolderDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,8 +60,10 @@
 		3F2BAF1F2C172AB8002EFA85 /* myanki */ = {
 			isa = PBXGroup;
 			children = (
+				3F806E3E2C17FD7500B14269 /* ReviewView.swift */,
 				3F2BAF2F2C172BF9002EFA85 /* CardAndFolder.swift */,
 				3F2BAF312C172C35002EFA85 /* FolderViewModel.swift */,
+				3F806E402C17FDD300B14269 /* FolderDetailView.swift */,
 				3F2BAF202C172AB8002EFA85 /* myankiApp.swift */,
 				3F2BAF222C172AB8002EFA85 /* ContentView.swift */,
 				3F2BAF242C172AB9002EFA85 /* Assets.xcassets */,
@@ -145,6 +151,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F806E3F2C17FD7500B14269 /* ReviewView.swift in Sources */,
+				3F806E412C17FDD300B14269 /* FolderDetailView.swift in Sources */,
 				3F2BAF302C172BFA002EFA85 /* CardAndFolder.swift in Sources */,
 				3F2BAF232C172AB8002EFA85 /* ContentView.swift in Sources */,
 				3F2BAF322C172C35002EFA85 /* FolderViewModel.swift in Sources */,

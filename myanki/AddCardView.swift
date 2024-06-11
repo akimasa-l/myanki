@@ -24,13 +24,12 @@ struct AddCardView: View {
                 Section(header: Text("Answer")) {
                     TextField("Enter answer", text: $answer)
                 }
-                
-                Button("Add Card") {
-                    viewModel.addCard(to: folder, question: question, answer: answer)
-                    presentationMode.wrappedValue.dismiss()
-                }
             }
             .navigationTitle("Add New Card")
+            .navigationBarItems(trailing: Button("Done") {
+                viewModel.addCard(to: folder, question: question, answer: answer)
+                presentationMode.wrappedValue.dismiss()
+            })
         }
     }
 }

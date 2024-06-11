@@ -18,13 +18,12 @@ struct AddFolderView: View {
                 Section(header: Text("Folder Name")) {
                     TextField("Enter folder name", text: $folderName)
                 }
-                
-                Button("Add Folder") {
-                    viewModel.addFolder(name: folderName)
-                    presentationMode.wrappedValue.dismiss()
-                }
             }
             .navigationTitle("Add New Folder")
+            .navigationBarItems(trailing: Button("Done") {
+                viewModel.addFolder(name: folderName)
+                presentationMode.wrappedValue.dismiss()
+            })
         }
     }
 }

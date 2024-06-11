@@ -10,6 +10,7 @@
 		3F1F88BE2C188A54004203A3 /* EditCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1F88BD2C188A54004203A3 /* EditCardView.swift */; };
 		3F1F88C02C189077004203A3 /* AddCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1F88BF2C189077004203A3 /* AddCardView.swift */; };
 		3F1F88C22C1890AA004203A3 /* AddFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1F88C12C1890AA004203A3 /* AddFolderView.swift */; };
+		3F1F88C42C1890FB004203A3 /* SidebarFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1F88C32C1890FB004203A3 /* SidebarFolderView.swift */; };
 		3F2BAF212C172AB8002EFA85 /* myankiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BAF202C172AB8002EFA85 /* myankiApp.swift */; };
 		3F2BAF232C172AB8002EFA85 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BAF222C172AB8002EFA85 /* ContentView.swift */; };
 		3F2BAF252C172AB9002EFA85 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F2BAF242C172AB9002EFA85 /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 		3F1F88BD2C188A54004203A3 /* EditCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardView.swift; sourceTree = "<group>"; };
 		3F1F88BF2C189077004203A3 /* AddCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardView.swift; sourceTree = "<group>"; };
 		3F1F88C12C1890AA004203A3 /* AddFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFolderView.swift; sourceTree = "<group>"; };
+		3F1F88C32C1890FB004203A3 /* SidebarFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarFolderView.swift; sourceTree = "<group>"; };
 		3F2BAF1D2C172AB8002EFA85 /* myanki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myanki.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F2BAF202C172AB8002EFA85 /* myankiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myankiApp.swift; sourceTree = "<group>"; };
 		3F2BAF222C172AB8002EFA85 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 				3F2BAF312C172C35002EFA85 /* FolderViewModel.swift */,
 				3F806E402C17FDD300B14269 /* FolderDetailView.swift */,
 				3F2BAF202C172AB8002EFA85 /* myankiApp.swift */,
+				3F1F88C32C1890FB004203A3 /* SidebarFolderView.swift */,
 				3F2BAF222C172AB8002EFA85 /* ContentView.swift */,
 				3F2BAF242C172AB9002EFA85 /* Assets.xcassets */,
 				3F2BAF262C172AB9002EFA85 /* myanki.entitlements */,
@@ -171,6 +174,7 @@
 				3F2BAF232C172AB8002EFA85 /* ContentView.swift in Sources */,
 				3F2BAF322C172C35002EFA85 /* FolderViewModel.swift in Sources */,
 				3F2BAF212C172AB8002EFA85 /* myankiApp.swift in Sources */,
+				3F1F88C42C1890FB004203A3 /* SidebarFolderView.swift in Sources */,
 				3F806E432C18020B00B14269 /* EditFolderNameView.swift in Sources */,
 				3F1F88C02C189077004203A3 /* AddCardView.swift in Sources */,
 			);

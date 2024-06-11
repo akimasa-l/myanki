@@ -13,6 +13,7 @@ struct FolderDetailView: View {
     @State private var showingEditFolderName = false
     @State private var newFolderName = ""
     @State private var startReview = false
+    @State private var isEditingFolderName = false
     let folder: Folder
     
     var body: some View {
@@ -25,7 +26,7 @@ struct FolderDetailView: View {
                         Spacer()
                         Button(action: {
                             newFolderName = folder.name
-                            showingEditFolderName = true
+                            isEditingFolderName = true
                         }) {
                             Image(systemName: "pencil")
                         }
@@ -63,11 +64,16 @@ struct FolderDetailView: View {
             .sheet(isPresented: $showingAddCardView) {
                 AddCardView(viewModel: viewModel, folder: folder)
             }
-            
-            // フォルダー名編集シート
-            EditFolderNameView(folderName: $newFolderName, isPresented: $showingEditFolderName) {
-                viewModel.updateFolderName(folder: folder, newName: newFolderName)
+            .sheet(isPresented: $isEditingFolderName) {
+                EditFolderNameView(folderName: $newFolderName, isPresented: $isEditingFolderName) {
+                    viewModel.updateFolderName(folder: folder, newName: newFolderName)
+                }
             }
+            
+//            // フォルダー名編集シート
+//            EditFolderNameView(folderName: $newFolderName, isPresented: $showingEditFolderName) {
+//                viewModel.updateFolderName(folder: folder, newName: newFolderName)
+//            }
             
             // レビュー開始ボタン
             Button(action: {

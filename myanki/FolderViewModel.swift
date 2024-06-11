@@ -1,5 +1,5 @@
 //
-//  CardViewModel.swift
+//  FolderViewModel.swift
 //  myanki
 //
 //  Created by 劉明正 on 2024/06/10.
@@ -133,6 +133,13 @@ class FolderViewModel: ObservableObject {
         if let data = UserDefaults.standard.data(forKey: saveKey),
            let savedFolders = try? JSONDecoder().decode([Folder].self, from: data) {
             folders = savedFolders
+        }
+    }
+    
+    func updateFolderName(folder: Folder, newName: String) {
+        if let index = folders.firstIndex(where: { $0.id == folder.id }) {
+            folders[index].name = newName
+            saveFolders()
         }
     }
 }

@@ -9,27 +9,47 @@ import SwiftUI
 
 struct FolderDetailView: View {
     @ObservedObject var viewModel: FolderViewModel
-    let folder: Folder
     @State private var showingAddCardView = false
+    @State private var showingEditFolderName = false
+    @State private var newFolderName = ""
     @State private var startReview = false
+    let folder: Folder
     
     var body: some View {
         VStack {
             List {
-                ForEach(folder.cards) { card in
-                    VStack(alignment: .leading) {
-                        Text(card.question)
-                            .font(.headline)
-                        Text(card.answer)
-                            .font(.subheadline)
+                // フォルダー名を表示
+                Section(header: Text("Folder Name")) {
+                    HStack {
+                        Text(folder.name)
+                        Spacer()
+                        Button(action: {
+                            newFolderName = folder.name
+                            showingEditFolderName = true
+                        }) {
+                            Image(systemName: "pencil")
+                        }
                     }
                 }
-                .onDelete { offsets in
-                    viewModel.removeCard(at: offsets, from: folder)
+                
+                // カードリストを表示
+                Section(header: Text("Cards")) {
+                    ForEach(folder.cards) { card in
+                        VStack(alignment: .leading) {
+                            Text(card.question)
+                                .font(.headline)
+                            Text(card.answer)
+                                .font(.subheadline)
+                        }
+                    }
+                    .onDelete { offsets in
+                        viewModel.removeCard(at: offsets, from: folder)
+                    }
                 }
             }
             .navigationTitle(folder.name)
             
+            // カード追加ボタン
             Button(action: {
                 showingAddCardView = true
             }) {
@@ -44,10 +64,12 @@ struct FolderDetailView: View {
                 AddCardView(viewModel: viewModel, folder: folder)
             }
             
-            NavigationLink(destination: ReviewView(viewModel: viewModel, folder: folder), isActive: $startReview) {
-                EmptyView()
+            // フォルダー名編集シート
+            EditFolderNameView(folderName: $newFolderName, isPresented: $showingEditFolderName) {
+                viewModel.updateFolderName(folder: folder, newName: newFolderName)
             }
             
+            // レビュー開始ボタン
             Button(action: {
                 startReview = true
             }) {

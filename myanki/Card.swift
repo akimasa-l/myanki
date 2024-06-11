@@ -22,3 +22,15 @@ struct Card: Identifiable, Codable, Equatable {
         self.interval = interval
     }
 }
+
+struct Folder: Identifiable, Codable {
+    let id: UUID
+    var name: String
+    var cards: [Card]
+    
+    init(id: UUID = UUID(), name: String, cards: [Card] = []) {
+        self.id = id
+        self.name = name
+        self.cards = cards
+    }
+}

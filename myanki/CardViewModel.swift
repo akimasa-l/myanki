@@ -8,31 +8,34 @@
 import Foundation
 import SwiftUI
 
-class CardViewModel: ObservableObject {
-    @Published var cards: [Card] = []
+class FolderViewModel: ObservableObject {
+    @Published var folders: [Folder] = []
+    @Published var currentFolderIndex: Int?
     @Published var currentCardIndex: Int?
     @Published var showAnswer: Bool = false
     @Published var allCardsReviewed: Bool = false
     
-    private let saveKey = "cards"
+    private let saveKey = "folders"
     
     init() {
-        loadCards()
-        nextCard()
+        loadFolders()
     }
     
     var currentCard: Card? {
-        if let currentCardIndex = currentCardIndex, cards.indices.contains(currentCardIndex) {
-            return cards[currentCardIndex]
+        if let currentFolderIndex = currentFolderIndex, folders.indices.contains(currentFolderIndex),
+           let currentCardIndex = currentCardIndex, folders[currentFolderIndex].cards.indices.contains(currentCardIndex) {
+            return folders[currentFolderIndex].cards[currentCardIndex]
         }
         return nil
     }
     
     func nextCard() {
-        let now = Date()
-        let dueCards = cards.filter { $0.nextReviewDate <= now }
+        guard let currentFolderIndex = currentFolderIndex else { return }
         
-        if let nextIndex = dueCards.isEmpty ? nil : cards.firstIndex(of: dueCards.first!) {
+        let now = Date()
+        let dueCards = folders[currentFolderIndex].cards.filter { $0.nextReviewDate <= now }
+        
+        if let nextIndex = dueCards.isEmpty ? nil : folders[currentFolderIndex].cards.firstIndex(of: dueCards.first!) {
             currentCardIndex = nextIndex
             showAnswer = false
             allCardsReviewed = false
@@ -47,28 +50,28 @@ class CardViewModel: ObservableObject {
     }
     
     func reviewCard(difficulty: String) {
-        guard let currentCardIndex = currentCardIndex else { return }
+        guard let currentFolderIndex = currentFolderIndex, let currentCardIndex = currentCardIndex else { return }
         
         let now = Date()
         var newInterval: TimeInterval
         
         switch difficulty {
         case "easy":
-            newInterval = cards[currentCardIndex].interval == 0 ? 60 * 60 : cards[currentCardIndex].interval * 2
+            newInterval = folders[currentFolderIndex].cards[currentCardIndex].interval == 0 ? 60 * 60 : folders[currentFolderIndex].cards[currentCardIndex].interval * 2
         case "good":
-            newInterval = cards[currentCardIndex].interval == 0 ? 30 * 60 : cards[currentCardIndex].interval * 1.5
+            newInterval = folders[currentFolderIndex].cards[currentCardIndex].interval == 0 ? 30 * 60 : folders[currentFolderIndex].cards[currentCardIndex].interval * 1.5
         case "hard":
-            newInterval = cards[currentCardIndex].interval == 0 ? 10 * 60 : cards[currentCardIndex].interval
+            newInterval = folders[currentFolderIndex].cards[currentCardIndex].interval == 0 ? 10 * 60 : folders[currentFolderIndex].cards[currentCardIndex].interval
         case "again":
             newInterval = 1 * 60
         default:
-            newInterval = cards[currentCardIndex].interval
+            newInterval = folders[currentFolderIndex].cards[currentCardIndex].interval
         }
         
-        cards[currentCardIndex].interval = newInterval
-        cards[currentCardIndex].nextReviewDate = now.addingTimeInterval(newInterval)
+        folders[currentFolderIndex].cards[currentCardIndex].interval = newInterval
+        folders[currentFolderIndex].cards[currentCardIndex].nextReviewDate = now.addingTimeInterval(newInterval)
         
-        saveCards()
+        saveFolders()
         nextCard()
     }
     
@@ -94,27 +97,42 @@ class CardViewModel: ObservableObject {
         return "\(Int(minutes))分後"
     }
     
-    func addCard(question: String, answer: String) {
-        let newCard = Card(question: question, answer: answer)
-        cards.append(newCard)
-        saveCards()
+    func addCard(to folder: Folder, question: String, answer: String) {
+        if let index = folders.firstIndex(where: { $0.id == folder.id }) {
+            let newCard = Card(question: question, answer: answer)
+            folders[index].cards.append(newCard)
+            saveFolders()
+        }
     }
     
-    func removeCard(at offsets: IndexSet) {
-        cards.remove(atOffsets: offsets)
-        saveCards()
+    func removeCard(at offsets: IndexSet, from folder: Folder) {
+        if let index = folders.firstIndex(where: { $0.id == folder.id }) {
+            folders[index].cards.remove(atOffsets: offsets)
+            saveFolders()
+        }
     }
     
-    private func saveCards() {
-        if let data = try? JSONEncoder().encode(cards) {
+    func addFolder(name: String) {
+        let newFolder = Folder(name: name)
+        folders.append(newFolder)
+        saveFolders()
+    }
+    
+    func removeFolder(at offsets: IndexSet) {
+        folders.remove(atOffsets: offsets)
+        saveFolders()
+    }
+    
+    private func saveFolders() {
+        if let data = try? JSONEncoder().encode(folders) {
             UserDefaults.standard.set(data, forKey: saveKey)
         }
     }
     
-    private func loadCards() {
+    private func loadFolders() {
         if let data = UserDefaults.standard.data(forKey: saveKey),
-           let savedCards = try? JSONDecoder().decode([Card].self, from: data) {
-            cards = savedCards
+           let savedFolders = try? JSONDecoder().decode([Folder].self, from: data) {
+            folders = savedFolders
         }
     }
 }

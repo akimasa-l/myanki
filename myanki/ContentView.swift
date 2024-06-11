@@ -8,27 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var viewModel = CardViewModel()
+    @StateObject var viewModel = FolderViewModel()
+    @State private var showingAddFolderView = false
     @State private var showingAddCardView = false
     
     var body: some View {
         NavigationView {
-            Sidebar(viewModel: viewModel, showingAddCardView: $showingAddCardView)
+            Sidebar(viewModel: viewModel, showingAddFolderView: $showingAddFolderView, showingAddCardView: $showingAddCardView)
             MainView(viewModel: viewModel)
         }
     }
 }
 
 struct Sidebar: View {
-    @ObservedObject var viewModel: CardViewModel
+    @ObservedObject var viewModel: FolderViewModel
+    @Binding var showingAddFolderView: Bool
     @Binding var showingAddCardView: Bool
     
     var body: some View {
         VStack {
             Button(action: {
-                showingAddCardView = true
+                showingAddFolderView = true
             }) {
-                Text("Add Card")
+                Text("Add Folder")
                     .padding()
                     .background(Color.blue)
                     .foregroundColor(.white)
@@ -37,7 +39,29 @@ struct Sidebar: View {
             .padding()
             
             List {
-                ForEach(viewModel.cards) { card in
+                ForEach(viewModel.folders) { folder in
+                    NavigationLink(destination: FolderDetailView(viewModel: viewModel, folder: folder)) {
+                        Text(folder.name)
+                    }
+                }
+                .onDelete(perform: viewModel.removeFolder)
+            }
+        }
+        .navigationTitle("Folders")
+        .sheet(isPresented: $showingAddFolderView) {
+            AddFolderView(viewModel: viewModel)
+        }
+    }
+}
+
+struct FolderDetailView: View {
+    @ObservedObject var viewModel: FolderViewModel
+    let folder: Folder
+    
+    var body: some View {
+        VStack {
+            List {
+                ForEach(folder.cards) { card in
                     VStack(alignment: .leading) {
                         Text(card.question)
                             .font(.headline)
@@ -45,18 +69,30 @@ struct Sidebar: View {
                             .font(.subheadline)
                     }
                 }
-                .onDelete(perform: viewModel.removeCard)
+                .onDelete { offsets in
+                    viewModel.removeCard(at: offsets, from: folder)
+                }
             }
-        }
-        .navigationTitle("Questions")
-        .sheet(isPresented: $showingAddCardView) {
-            AddCardView(viewModel: viewModel)
+            .navigationTitle(folder.name)
+            
+            Button(action: {
+                viewModel.currentFolderIndex = viewModel.folders.firstIndex(where: { $0.id == folder.id })
+                viewModel.currentCardIndex = nil
+                viewModel.nextCard()
+            }) {
+                Text("Start Review")
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            .padding()
         }
     }
 }
 
 struct MainView: View {
-    @ObservedObject var viewModel: CardViewModel
+    @ObservedObject var viewModel: FolderViewModel
     
     var body: some View {
         VStack {
@@ -134,7 +170,8 @@ struct AddCardView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var question = ""
     @State private var answer = ""
-    @ObservedObject var viewModel: CardViewModel
+    @ObservedObject var viewModel: FolderViewModel
+    let folder: Folder
     
     var body: some View {
         NavigationView {
@@ -148,11 +185,33 @@ struct AddCardView: View {
                 }
                 
                 Button("Add Card") {
-                    viewModel.addCard(question: question, answer: answer)
+                    viewModel.addCard(to: folder, question: question, answer: answer)
                     presentationMode.wrappedValue.dismiss()
                 }
             }
             .navigationTitle("Add New Card")
+        }
+    }
+}
+
+struct AddFolderView: View {
+    @Environment(\.presentationMode) var presentationMode
+    @State private var folderName = ""
+    @ObservedObject var viewModel: FolderViewModel
+    
+    var body: some View {
+        NavigationView {
+            Form {
+                Section(header: Text("Folder Name")) {
+                    TextField("Enter folder name", text: $folderName)
+                }
+                
+                Button("Add Folder") {
+                    viewModel.addFolder(name: folderName)
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }
+            .navigationTitle("Add New Folder")
         }
     }
 }

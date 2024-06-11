@@ -9,8 +9,8 @@ import Foundation
 
 struct Card: Identifiable, Codable, Equatable {
     let id: UUID
-    let question: String
-    let answer: String
+    var question: String
+    var answer: String
     var nextReviewDate: Date
     var interval: TimeInterval
     

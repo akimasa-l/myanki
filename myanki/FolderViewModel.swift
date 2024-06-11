@@ -142,4 +142,21 @@ class FolderViewModel: ObservableObject {
             saveFolders()
         }
     }
+    
+    func moveCard(from source: IndexSet, to destination: Int, in folder: Folder) {
+        if let index = folders.firstIndex(where: { $0.id == folder.id }) {
+            folders[index].cards.move(fromOffsets: source, toOffset: destination)
+            saveFolders()
+        }
+    }
+
+    func updateCard(folder: Folder, card: Card, newQuestion: String, newAnswer: String) {
+        if let folderIndex = folders.firstIndex(where: { $0.id == folder.id }),
+           let cardIndex = folders[folderIndex].cards.firstIndex(where: { $0.id == card.id }) {
+            folders[folderIndex].cards[cardIndex].question = newQuestion
+            folders[folderIndex].cards[cardIndex].answer = newAnswer
+            saveFolders()
+        }
+    }
+
 }

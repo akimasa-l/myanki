@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F1F88BE2C188A54004203A3 /* EditCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1F88BD2C188A54004203A3 /* EditCardView.swift */; };
 		3F2BAF212C172AB8002EFA85 /* myankiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BAF202C172AB8002EFA85 /* myankiApp.swift */; };
 		3F2BAF232C172AB8002EFA85 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BAF222C172AB8002EFA85 /* ContentView.swift */; };
 		3F2BAF252C172AB9002EFA85 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F2BAF242C172AB9002EFA85 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F1F88BD2C188A54004203A3 /* EditCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardView.swift; sourceTree = "<group>"; };
 		3F2BAF1D2C172AB8002EFA85 /* myanki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myanki.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F2BAF202C172AB8002EFA85 /* myankiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myankiApp.swift; sourceTree = "<group>"; };
 		3F2BAF222C172AB8002EFA85 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				3F806E422C18020B00B14269 /* EditFolderNameView.swift */,
+				3F1F88BD2C188A54004203A3 /* EditCardView.swift */,
 				3F806E3E2C17FD7500B14269 /* ReviewView.swift */,
 				3F2BAF2F2C172BF9002EFA85 /* CardAndFolder.swift */,
 				3F2BAF312C172C35002EFA85 /* FolderViewModel.swift */,
@@ -154,6 +157,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F1F88BE2C188A54004203A3 /* EditCardView.swift in Sources */,
 				3F806E3F2C17FD7500B14269 /* ReviewView.swift in Sources */,
 				3F806E412C17FDD300B14269 /* FolderDetailView.swift in Sources */,
 				3F2BAF302C172BFA002EFA85 /* CardAndFolder.swift in Sources */,

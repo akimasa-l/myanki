@@ -6,33 +6,39 @@
 //
 
 import Foundation
+import SwiftUI
 
 class CardViewModel: ObservableObject {
-    @Published var cards: [Card] = [
-        Card(question: "What is the capital of France?", answer: "Paris", nextReviewDate: Date(), interval: 0),
-        Card(question: "What is 2+2?", answer: "4", nextReviewDate: Date(), interval: 0),
-        // ここにさらにカードを追加できます
-    ]
-    
-    @Published var currentCardIndex: Int = 0
+    @Published var cards: [Card] = []
+    @Published var currentCardIndex: Int?
     @Published var showAnswer: Bool = false
-    @Published var allCardsReviewed: Bool = false  // 全てのカードがレビューされたかどうかを保持
+    @Published var allCardsReviewed: Bool = false
+    
+    private let saveKey = "cards"
+    
+    init() {
+        loadCards()
+        nextCard()
+    }
     
     var currentCard: Card? {
-        if cards.isEmpty {
-            return nil
+        if let currentCardIndex = currentCardIndex, cards.indices.contains(currentCardIndex) {
+            return cards[currentCardIndex]
         }
-        return cards[currentCardIndex]
+        return nil
     }
     
     func nextCard() {
         let now = Date()
-        if let nextIndex = cards.enumerated().filter({ $0.element.nextReviewDate <= now }).map({ $0.offset }).first {
+        let dueCards = cards.filter { $0.nextReviewDate <= now }
+        
+        if let nextIndex = dueCards.isEmpty ? nil : cards.firstIndex(of: dueCards.first!) {
             currentCardIndex = nextIndex
             showAnswer = false
-            allCardsReviewed = false  // 次のカードが見つかったのでフラグをリセット
+            allCardsReviewed = false
         } else {
-            allCardsReviewed = true  // 次のカードが見つからなかった場合
+            allCardsReviewed = true
+            currentCardIndex = nil
         }
     }
     
@@ -41,27 +47,74 @@ class CardViewModel: ObservableObject {
     }
     
     func reviewCard(difficulty: String) {
+        guard let currentCardIndex = currentCardIndex else { return }
+        
         let now = Date()
         var newInterval: TimeInterval
         
         switch difficulty {
         case "easy":
-            newInterval = currentCard?.interval == 0 ? 60 * 60 : currentCard!.interval * 2
+            newInterval = cards[currentCardIndex].interval == 0 ? 60 * 60 : cards[currentCardIndex].interval * 2
         case "good":
-            newInterval = currentCard?.interval == 0 ? 30 * 60 : currentCard!.interval * 1.5
+            newInterval = cards[currentCardIndex].interval == 0 ? 30 * 60 : cards[currentCardIndex].interval * 1.5
         case "hard":
-            newInterval = currentCard?.interval == 0 ? 10 * 60 : currentCard!.interval
+            newInterval = cards[currentCardIndex].interval == 0 ? 10 * 60 : cards[currentCardIndex].interval
         case "again":
             newInterval = 1 * 60
         default:
-            newInterval = currentCard?.interval ?? 0
+            newInterval = cards[currentCardIndex].interval
         }
         
-        if let index = currentCardIndex as Int? {
-            cards[index].interval = newInterval
-            cards[index].nextReviewDate = now.addingTimeInterval(newInterval)
-        }
+        cards[currentCardIndex].interval = newInterval
+        cards[currentCardIndex].nextReviewDate = now.addingTimeInterval(newInterval)
         
+        saveCards()
         nextCard()
+    }
+    
+    func nextReviewTime(for difficulty: String) -> String {
+        guard let currentCard = currentCard else { return "0分後" }
+        
+        var interval: TimeInterval
+        
+        switch difficulty {
+        case "easy":
+            interval = currentCard.interval == 0 ? 60 * 60 : currentCard.interval * 2
+        case "good":
+            interval = currentCard.interval == 0 ? 30 * 60 : currentCard.interval * 1.5
+        case "hard":
+            interval = currentCard.interval == 0 ? 10 * 60 : currentCard.interval
+        case "again":
+            interval = 1 * 60
+        default:
+            interval = currentCard.interval
+        }
+        
+        let minutes = interval / 60
+        return "\(Int(minutes))分後"
+    }
+    
+    func addCard(question: String, answer: String) {
+        let newCard = Card(question: question, answer: answer)
+        cards.append(newCard)
+        saveCards()
+    }
+    
+    func removeCard(at offsets: IndexSet) {
+        cards.remove(atOffsets: offsets)
+        saveCards()
+    }
+    
+    private func saveCards() {
+        if let data = try? JSONEncoder().encode(cards) {
+            UserDefaults.standard.set(data, forKey: saveKey)
+        }
+    }
+    
+    private func loadCards() {
+        if let data = UserDefaults.standard.data(forKey: saveKey),
+           let savedCards = try? JSONDecoder().decode([Card].self, from: data) {
+            cards = savedCards
+        }
     }
 }

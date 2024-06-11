@@ -7,9 +7,18 @@
 
 import Foundation
 
-struct Card {
+struct Card: Identifiable, Codable, Equatable {
+    let id: UUID
     let question: String
     let answer: String
     var nextReviewDate: Date
-    var interval: TimeInterval // 間隔を保持
+    var interval: TimeInterval
+    
+    init(id: UUID = UUID(), question: String, answer: String, nextReviewDate: Date = Date(), interval: TimeInterval = 0) {
+        self.id = id
+        self.question = question
+        self.answer = answer
+        self.nextReviewDate = nextReviewDate
+        self.interval = interval
+    }
 }

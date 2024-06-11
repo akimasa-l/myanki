@@ -78,6 +78,9 @@ struct FolderDetailView: View {
                     EditButton()
                 }
             }
+            NavigationLink(destination: ReviewView(viewModel: viewModel, folder: folder), isActive: $startReview) {
+                EmptyView()
+            }
             // レビュー開始ボタン
             Button(action: {
                 startReview = true

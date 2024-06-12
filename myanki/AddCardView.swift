@@ -45,9 +45,9 @@ struct AddCardView: View {
                             .frame(height: 150) // 高さを指定
                         
                     }
-                    .navigationBarItems(trailing: Button("Next") {
-                        viewModel.addCardsFromCSV(to: folder, csvString: csvText)
-                        presentationMode.wrappedValue.dismiss()
+                    .navigationBarItems(trailing: NavigationLink(destination: CSVConfirmationView(viewModel: viewModel, folder: folder, csvText: $csvText)) {
+                        Text("Next")
+                            .foregroundColor(.blue)
                     })
                 }
             }

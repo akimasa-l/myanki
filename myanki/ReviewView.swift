@@ -10,6 +10,7 @@ import SwiftUI
 struct ReviewView: View {
     @EnvironmentObject var viewModel: FolderViewModel
     let folder: Folder
+    @State var id = 0
     
     var body: some View {
         VStack {
@@ -33,10 +34,12 @@ struct ReviewView: View {
                     PenKitView()
                         .frame(width: 500, height: 200)
                         .border(Color.black)
+                        .id(id)
                     
                     HStack {
                         Button(action: {
                             viewModel.reviewCard(difficulty: "again")
+                            id+=1
                         }) {
                             Text("Again\n(\(viewModel.nextReviewTime(for: "again")))")
                                 .padding()
@@ -48,6 +51,7 @@ struct ReviewView: View {
                         
                         Button(action: {
                             viewModel.reviewCard(difficulty: "hard")
+                            id+=1
                         }) {
                             Text("Hard\n(\(viewModel.nextReviewTime(for: "hard")))")
                                 .padding()
@@ -59,6 +63,7 @@ struct ReviewView: View {
                         
                         Button(action: {
                             viewModel.reviewCard(difficulty: "good")
+                            id+=1
                         }) {
                             Text("Good\n(\(viewModel.nextReviewTime(for: "good")))")
                                 .padding()
@@ -70,6 +75,7 @@ struct ReviewView: View {
                         
                         Button(action: {
                             viewModel.reviewCard(difficulty: "easy")
+                            id+=1
                         }) {
                             Text("Easy\n(\(viewModel.nextReviewTime(for: "easy")))")
                                 .padding()

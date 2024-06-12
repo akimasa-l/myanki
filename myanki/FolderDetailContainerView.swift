@@ -11,7 +11,7 @@ struct FolderDetailContainerView: View {
     @EnvironmentObject var viewModel: FolderViewModel
     
     var body: some View {
-        if let folder = viewModel.selectedFolder {
+        if viewModel.selectedFolder != nil {
             FolderDetailView()
         } else {
             Text("Select a folder to start reviewing")

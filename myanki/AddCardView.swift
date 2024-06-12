@@ -13,6 +13,9 @@ struct AddCardView: View {
     @State private var answer = ""
     @State private var importMethod = "Individual"
     @State private var csvText = ""
+    @State private var lineSeparator = "\n"
+    @State private var fieldSeparator = ","
+    @State private var swapQA = false
     @State private var showingCSVConfirmation = false
     let folder: Folder
     @Environment(\.presentationMode) var presentationMode
@@ -43,9 +46,21 @@ struct AddCardView: View {
                     Section(header: Text("Paste CSV Data")) {
                         TextEditor(text: $csvText)
                             .frame(height: 150) // 高さを指定
-                        
                     }
-                    .navigationBarItems(trailing: NavigationLink(destination: CSVConfirmationView(viewModel: viewModel, folder: folder, csvText: $csvText)) {
+                    Section(header: Text("Line Separator")) {
+                        TextField("Line Separator", text: $lineSeparator)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .padding(.vertical)
+                    }
+                    Section(header: Text("Field Separator")) {
+                        TextField("Field Separator", text: $fieldSeparator)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .padding(.vertical)
+                    }
+                    Section(header: Text("Swap Q and A")) {
+                        Toggle("Swap Q and A", isOn: $swapQA)
+                    }
+                    .navigationBarItems(trailing: NavigationLink(destination: CSVConfirmationView(viewModel: viewModel, folder: folder, csvText: $csvText, lineSeparator: $lineSeparator, fieldSeparator: $fieldSeparator, swapQA: $swapQA)) {
                         Text("Next")
                             .foregroundColor(.blue)
                     })

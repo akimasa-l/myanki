@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddCardView: View {
-    @ObservedObject var viewModel: FolderViewModel
+    @EnvironmentObject var viewModel: FolderViewModel
     @State private var question = ""
     @State private var answer = ""
     @State private var importMethod = "Individual"
@@ -58,7 +58,7 @@ struct AddCardView: View {
                     Section {
                         Toggle("Swap Q and A", isOn: $swapQA)
                     }
-                    .navigationBarItems(trailing: NavigationLink(destination: CSVConfirmationView(viewModel: viewModel, folder: folder, csvText: $csvText, lineSeparator: $lineSeparator, fieldSeparator: $fieldSeparator, swapQA: $swapQA, dismiss: dismiss)) {
+                    .navigationBarItems(trailing: NavigationLink(destination: CSVConfirmationView(folder: folder, csvText: $csvText, lineSeparator: $lineSeparator, fieldSeparator: $fieldSeparator, swapQA: $swapQA,dismiss: dismiss)) {
                         Text("Next")
                             .foregroundColor(.blue)
                     })

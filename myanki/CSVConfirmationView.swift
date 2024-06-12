@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CSVConfirmationView: View {
-    @ObservedObject var viewModel: FolderViewModel
+    @EnvironmentObject var viewModel: FolderViewModel
     let folder: Folder
     @Binding var csvText: String
     @Binding var lineSeparator: String

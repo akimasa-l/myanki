@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ReviewView: View {
-    @ObservedObject var viewModel: FolderViewModel
+    @EnvironmentObject var viewModel: FolderViewModel
     let folder: Folder
     
     var body: some View {

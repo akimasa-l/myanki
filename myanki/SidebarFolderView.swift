@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SidebarFolderView: View {
-    @ObservedObject var viewModel: FolderViewModel
-    @Binding var showingAddFolderView: Bool
+    @EnvironmentObject var viewModel: FolderViewModel
+    @State var showingAddFolderView = false
 //    @Binding var folderSelection: Folder?
     
     var body: some View {
@@ -33,7 +33,7 @@ struct SidebarFolderView: View {
         }
         .navigationTitle("Folders")
         .sheet(isPresented: $showingAddFolderView) {
-            AddFolderView(viewModel: viewModel)
+            AddFolderView()
         }
     }
 }

@@ -10,7 +10,7 @@ import SwiftUI
 struct AddFolderView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var folderName = ""
-    @ObservedObject var viewModel: FolderViewModel
+    @EnvironmentObject var viewModel: FolderViewModel
     
     var body: some View {
         NavigationView {

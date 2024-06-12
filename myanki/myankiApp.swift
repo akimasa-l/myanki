@@ -12,6 +12,7 @@ struct myankiApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(FolderViewModel())
         }
     }
 }

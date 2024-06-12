@@ -14,7 +14,7 @@ class FolderViewModel: ObservableObject {
     @Published var currentCardIndex: Int?
     @Published var showAnswer: Bool = false
     @Published var allCardsReviewed: Bool = false
-//    @Published var selectedFolder: Folder?
+    @Published var selectedFolder: Folder?
 
     
     private let saveKey = "folders"

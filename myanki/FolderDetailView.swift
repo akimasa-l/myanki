@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FolderDetailView: View {
-    @ObservedObject var viewModel: FolderViewModel
+    @EnvironmentObject var viewModel: FolderViewModel
     @State private var showingAddCardView = false
     @State private var showingEditCardView = false
     @State private var editingCard: Card?
@@ -17,91 +17,93 @@ struct FolderDetailView: View {
     @State private var newFolderName = ""
     @State private var startReview = false
     @State private var isEditingFolderName = false
-    let folder: Folder
+//    let folder: Folder
     
     var body: some View {
-        VStack {
-            Form {
-                // フォルダー名を表示
-                Section(header: Text("Folder Name")) {
-                    HStack {
-                        Text(folder.name)
-                        Spacer()
-                        Button(action: {
-                            newFolderName = folder.name
-                            isEditingFolderName = true
-                        }) {
-                            Image(systemName: "pencil")
-                        }
-                    }
-                }
-                
-                // カードリストを表示
-                Section(header: Text("Cards")) {
-                    ForEach(folder.cards) { card in
-                        VStack(alignment: .leading) {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(card.question)
-                                        .font(.headline)
-                                    Text(card.answer)
-                                        .font(.subheadline)
-                                }
-                                Spacer()
-                                Button(action: {
-                                    editingCard = card
-                                    editingQuestion = card.question
-                                    editingAnswer = card.answer
-                                    showingEditCardView = true
-                                }) {
-                                    Image(systemName: "pencil")
-                                }
+        if let folder=viewModel.selectedFolder{
+            VStack {
+                Form {
+                    // フォルダー名を表示
+                    Section(header: Text("Folder Name")) {
+                        HStack {
+                            Text(folder.name)
+                            Spacer()
+                            Button(action: {
+                                newFolderName = folder.name
+                                isEditingFolderName = true
+                            }) {
+                                Image(systemName: "pencil")
                             }
                         }
                     }
-                    .onDelete { offsets in
-                        viewModel.removeCard(at: offsets, from: folder)
+                    
+                    // カードリストを表示
+                    Section(header: Text("Cards")) {
+                        ForEach(folder.cards) { card in
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(card.question)
+                                            .font(.headline)
+                                        Text(card.answer)
+                                            .font(.subheadline)
+                                    }
+                                    Spacer()
+                                    Button(action: {
+                                        editingCard = card
+                                        editingQuestion = card.question
+                                        editingAnswer = card.answer
+                                        showingEditCardView = true
+                                    }) {
+                                        Image(systemName: "pencil")
+                                    }
+                                }
+                            }
+                        }
+                        .onDelete { offsets in
+                            viewModel.removeCard(at: offsets, from: folder)
+                        }
+                        .onMove { source, destination in
+                            viewModel.moveCard(from: source, to: destination, in: folder)
+                        }
                     }
-                    .onMove { source, destination in
-                        viewModel.moveCard(from: source, to: destination, in: folder)
+                }
+                NavigationLink(destination: ReviewView(folder: folder)) {
+                    Text("Start Review")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+            }
+            .toolbar {
+                HStack{
+                    Button(action: {
+                        showingAddCardView = true
+                    }) {
+                        Image(systemName: "plus")
+                    }
+                    Spacer()
+                    EditButton()
+                }
+            }
+            .navigationTitle(folder.name)
+            .sheet(isPresented: $isEditingFolderName) {
+                EditFolderNameView(folderName: $newFolderName, isPresented: $isEditingFolderName) {
+                    viewModel.updateFolderName(folder: folder, newName: newFolderName)
+                }
+            }
+            .sheet(isPresented: $showingEditCardView) {
+                if let card = editingCard {
+                    EditCardView(question: $editingQuestion, answer: $editingAnswer, isPresented: $showingEditCardView) {
+                        viewModel.updateCard(folder: folder, card: card, newQuestion: editingQuestion, newAnswer: editingAnswer)
                     }
                 }
             }
-            NavigationLink(destination: ReviewView(viewModel: viewModel, folder: folder)) {
-                Text("Start Review")
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+            .sheet(isPresented: $showingAddCardView) {
+                AddCardView(folder: folder)
             }
         }
-        .toolbar {
-            HStack{
-                Button(action: {
-                    showingAddCardView = true
-                }) {
-                    Image(systemName: "plus")
-                }
-                Spacer()
-                EditButton()
-            }
         }
-        .navigationTitle(folder.name)
-        .sheet(isPresented: $isEditingFolderName) {
-            EditFolderNameView(folderName: $newFolderName, isPresented: $isEditingFolderName) {
-                viewModel.updateFolderName(folder: folder, newName: newFolderName)
-            }
-        }
-        .sheet(isPresented: $showingEditCardView) {
-            if let card = editingCard {
-                EditCardView(question: $editingQuestion, answer: $editingAnswer, isPresented: $showingEditCardView) {
-                    viewModel.updateCard(folder: folder, card: card, newQuestion: editingQuestion, newAnswer: editingAnswer)
-                }
-            }
-        }
-        .sheet(isPresented: $showingAddCardView) {
-            AddCardView(viewModel: viewModel, folder: folder)
-        }
-    }
 }
 

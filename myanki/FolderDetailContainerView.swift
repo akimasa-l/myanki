@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct FolderDetailContainerView: View {
-    @ObservedObject var viewModel: FolderViewModel
+    @EnvironmentObject var viewModel: FolderViewModel
     
     var body: some View {
         if let folder = viewModel.selectedFolder {
-            FolderDetailView(viewModel: viewModel, folder: folder)
+            FolderDetailView()
         } else {
             Text("Select a folder to start reviewing")
                 .font(.largeTitle)

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var viewModel = FolderViewModel()
+    @EnvironmentObject var viewModel: FolderViewModel
     @State private var showingAddFolderView = false
 //    @State var folderSelection: Folder? = nil
     
@@ -25,8 +25,8 @@ struct ContentView: View {
 //            FolderDetailContainerView(viewModel: viewModel)
 //        })
         NavigationView {
-            SidebarFolderView(viewModel: viewModel, showingAddFolderView: $showingAddFolderView)
-            FolderDetailContainerView(viewModel: viewModel)
+            SidebarFolderView()
+            FolderDetailContainerView()
         }
     }
 }

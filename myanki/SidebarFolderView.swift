@@ -10,11 +10,14 @@ import SwiftUI
 struct SidebarFolderView: View {
     @ObservedObject var viewModel: FolderViewModel
     @Binding var showingAddFolderView: Bool
+    @Binding var folderSelection: Folder?
     
     var body: some View {
         List {
             ForEach(viewModel.folders) { folder in
-                NavigationLink(destination: FolderDetailView(viewModel: viewModel, folder: folder)) {
+                Button(action: {
+                    viewModel.selectedFolder = folder
+                }) {
                     Text(folder.name)
                 }
             }

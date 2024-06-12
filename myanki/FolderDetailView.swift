@@ -64,35 +64,31 @@ struct FolderDetailView: View {
                     }
                     .onMove { source, destination in
                         viewModel.moveCard(from: source, to: destination, in: folder)
+                        
                     }
+                    
+                }
+                
+                .navigationTitle(folder.name)
+//                .toolbar {
+//                    HStack{
+//                        Button(action: {
+//                            showingAddCardView = true
+//                        }) {
+//                            Image(systemName: "plus")
+//                        }
+//                        Spacer()
+//                        EditButton()
+//                    }
+//                }
+                NavigationLink(destination: ReviewView(viewModel: viewModel, folder: folder)) {
+                    Text("Start Review")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                 }
             }
-            .navigationTitle(folder.name)
-            .toolbar {
-                HStack{
-                    Button(action: {
-                        showingAddCardView = true
-                    }) {
-                        Image(systemName: "plus")
-                    }
-                    Spacer()
-                    EditButton()
-                }
-            }
-            NavigationLink(destination: ReviewView(viewModel: viewModel, folder: folder), isActive: $startReview) {
-                EmptyView()
-            }
-            // レビュー開始ボタン
-            Button(action: {
-                startReview = true
-            }) {
-                Text("Start Review")
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
-            .padding()
         }
         .sheet(isPresented: $isEditingFolderName) {
             EditFolderNameView(folderName: $newFolderName, isPresented: $isEditingFolderName) {

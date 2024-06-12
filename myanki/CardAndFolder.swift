@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Card: Identifiable, Codable, Equatable {
+struct Card: Identifiable, Codable, Equatable, Hashable {
     let id: UUID
     var question: String
     var answer: String
@@ -23,7 +23,7 @@ struct Card: Identifiable, Codable, Equatable {
     }
 }
 
-struct Folder: Identifiable, Codable {
+struct Folder: Identifiable, Codable, Equatable, Hashable {
     let id: UUID
     var name: String
     var cards: [Card]

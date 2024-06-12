@@ -30,10 +30,10 @@ struct ReviewView: View {
                             viewModel.flipCard()
                         }
                     
-                    PenKitView()
-                        .frame(width: 500, height: 200)
-                        .border(Color.black)
-                    
+//                    PenKitView()
+//                        .frame(width: 500, height: 200)
+//                        .border(Color.black)
+//                    
                     HStack {
                         Button(action: {
                             viewModel.reviewCard(difficulty: "again")
@@ -85,7 +85,7 @@ struct ReviewView: View {
         .navigationTitle("Review")
         .onAppear {
             viewModel.currentFolderIndex = viewModel.folders.firstIndex(where: { $0.id == folder.id })
-            viewModel.currentCardIndex = nil
+//            viewModel.currentCardIndex = nil
             viewModel.nextCard()
         }
     }

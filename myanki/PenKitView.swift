@@ -21,7 +21,9 @@ struct PenKitView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: PKCanvasView, context: Context) {
-        
+        if uiView.isHidden{
+            toolPicker.setVisible(false, forFirstResponder: uiView)
+        }
     }
     
 }

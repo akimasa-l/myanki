@@ -10,7 +10,7 @@ import SwiftUI
 struct SidebarFolderView: View {
     @ObservedObject var viewModel: FolderViewModel
     @Binding var showingAddFolderView: Bool
-    @Binding var folderSelection: Folder?
+//    @Binding var folderSelection: Folder?
     
     var body: some View {
         List {

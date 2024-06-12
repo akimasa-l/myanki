@@ -21,7 +21,7 @@ struct FolderDetailView: View {
     
     var body: some View {
         VStack {
-            List {
+            Form {
                 // フォルダー名を表示
                 Section(header: Text("Folder Name")) {
                     HStack {
@@ -64,32 +64,29 @@ struct FolderDetailView: View {
                     }
                     .onMove { source, destination in
                         viewModel.moveCard(from: source, to: destination, in: folder)
-                        
                     }
-                    
-                }
-                
-                .navigationTitle(folder.name)
-//                .toolbar {
-//                    HStack{
-//                        Button(action: {
-//                            showingAddCardView = true
-//                        }) {
-//                            Image(systemName: "plus")
-//                        }
-//                        Spacer()
-//                        EditButton()
-//                    }
-//                }
-                NavigationLink(destination: ReviewView(viewModel: viewModel, folder: folder)) {
-                    Text("Start Review")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
                 }
             }
+            NavigationLink(destination: ReviewView(viewModel: viewModel, folder: folder)) {
+                Text("Start Review")
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
         }
+        .toolbar {
+            HStack{
+                Button(action: {
+                    showingAddCardView = true
+                }) {
+                    Image(systemName: "plus")
+                }
+                Spacer()
+                EditButton()
+            }
+        }
+        .navigationTitle(folder.name)
         .sheet(isPresented: $isEditingFolderName) {
             EditFolderNameView(folderName: $newFolderName, isPresented: $isEditingFolderName) {
                 viewModel.updateFolderName(folder: folder, newName: newFolderName)

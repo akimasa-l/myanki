@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var viewModel = FolderViewModel()
     @State private var showingAddFolderView = false
-    @State var folderSelection: Folder? = nil
+//    @State var folderSelection: Folder? = nil
     
     var body: some View {
 //        NavigationView {
@@ -19,10 +19,14 @@ struct ContentView: View {
 //                .font(.largeTitle)
 //                .padding()
 //        }
-        NavigationSplitView(sidebar: {
-            SidebarFolderView(viewModel: viewModel, showingAddFolderView: $showingAddFolderView, folderSelection: $folderSelection)
-        }, detail: {
+//        NavigationSplitView(sidebar: {
+//            SidebarFolderView(viewModel: viewModel, showingAddFolderView: $showingAddFolderView, folderSelection: $folderSelection)
+//        }, detail: {
+//            FolderDetailContainerView(viewModel: viewModel)
+//        })
+        NavigationView {
+            SidebarFolderView(viewModel: viewModel, showingAddFolderView: $showingAddFolderView)
             FolderDetailContainerView(viewModel: viewModel)
-        })
+        }
     }
 }

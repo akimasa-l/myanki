@@ -30,10 +30,10 @@ struct ReviewView: View {
                             viewModel.flipCard()
                         }
                     
-//                    PenKitView()
-//                        .frame(width: 500, height: 200)
-//                        .border(Color.black)
-//                    
+                    PenKitView()
+                        .frame(width: 500, height: 200)
+                        .border(Color.black)
+                    
                     HStack {
                         Button(action: {
                             viewModel.reviewCard(difficulty: "again")

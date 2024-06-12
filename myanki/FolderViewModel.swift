@@ -159,4 +159,15 @@ class FolderViewModel: ObservableObject {
         }
     }
 
+    func addCardsFromCSV(to folder: Folder, csvString: String) {
+        let lines = csvString.split(separator: "\n")
+        for line in lines {
+            let components = line.split(separator: ",")
+            if components.count == 2 {
+                let question = String(components[0]).trimmingCharacters(in: .whitespacesAndNewlines)
+                let answer = String(components[1]).trimmingCharacters(in: .whitespacesAndNewlines)
+                addCard(to: folder, question: question, answer: answer)
+            }
+        }
+    }
 }

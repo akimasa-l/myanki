@@ -75,6 +75,7 @@ struct FolderDetailView: View {
                     }) {
                         Image(systemName: "plus")
                     }
+                    Spacer()
                     EditButton()
                 }
             }

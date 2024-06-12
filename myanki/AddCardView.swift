@@ -8,26 +8,51 @@
 import SwiftUI
 
 struct AddCardView: View {
-    @Environment(\.presentationMode) var presentationMode
+    @ObservedObject var viewModel: FolderViewModel
     @State private var question = ""
     @State private var answer = ""
-    @ObservedObject var viewModel: FolderViewModel
+    @State private var importMethod = "Individual"
+    @State private var csvText = ""
+    @State private var showingCSVConfirmation = false
     let folder: Folder
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Question")) {
-                    TextField("Enter question", text: $question)
+                // Pickerを追加
+                Section {
+                    Picker("Import Method", selection: $importMethod) {
+                        Text("Individual").tag("Individual")
+                        Text("CSV").tag("CSV")
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
                 }
                 
-                Section(header: Text("Answer")) {
-                    TextField("Enter answer", text: $answer)
+                // Pickerの選択に応じたフォームを表示
+                if importMethod == "Individual" {
+                    Section(header: Text("Add New Card")) {
+                        TextField("Question", text: $question)
+                        TextField("Answer", text: $answer)
+                    }
+                    .navigationBarItems(trailing: Button("Add Card") {
+                        viewModel.addCard(to: folder, question: question, answer: answer)
+                        presentationMode.wrappedValue.dismiss()
+                    })
+                } else if importMethod == "CSV" {
+                    Section(header: Text("Paste CSV Data")) {
+                        TextEditor(text: $csvText)
+                            .frame(height: 150) // 高さを指定
+                        
+                    }
+                    .navigationBarItems(trailing: Button("Next") {
+                        viewModel.addCardsFromCSV(to: folder, csvString: csvText)
+                        presentationMode.wrappedValue.dismiss()
+                    })
                 }
             }
             .navigationTitle("Add New Card")
-            .navigationBarItems(trailing: Button("Done") {
-                viewModel.addCard(to: folder, question: question, answer: answer)
+            .navigationBarItems(leading: Button("Cancel") {
                 presentationMode.wrappedValue.dismiss()
             })
         }

@@ -13,12 +13,13 @@ struct AddCardView: View {
     @State private var answer = ""
     @State private var importMethod = "Individual"
     @State private var csvText = ""
-    @State private var lineSeparator = "\n"
+    @State private var lineSeparator = "\\n"
     @State private var fieldSeparator = ","
     @State private var swapQA = false
     @State private var showingCSVConfirmation = false
     let folder: Folder
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.isPresented) var isPresented
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         NavigationView {
@@ -40,8 +41,9 @@ struct AddCardView: View {
                     }
                     .navigationBarItems(trailing: Button("Add Card") {
                         viewModel.addCard(to: folder, question: question, answer: answer)
-                        presentationMode.wrappedValue.dismiss()
+                        dismiss()
                     })
+                    .navigationTitle("Add New Card")
                 } else if importMethod == "CSV" {
                     Section(header: Text("Paste CSV Data")) {
                         TextEditor(text: $csvText)
@@ -49,26 +51,22 @@ struct AddCardView: View {
                     }
                     Section(header: Text("Line Separator")) {
                         TextField("Line Separator", text: $lineSeparator)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .padding(.vertical)
                     }
                     Section(header: Text("Field Separator")) {
                         TextField("Field Separator", text: $fieldSeparator)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .padding(.vertical)
                     }
-                    Section(header: Text("Swap Q and A")) {
+                    Section {
                         Toggle("Swap Q and A", isOn: $swapQA)
                     }
-                    .navigationBarItems(trailing: NavigationLink(destination: CSVConfirmationView(viewModel: viewModel, folder: folder, csvText: $csvText, lineSeparator: $lineSeparator, fieldSeparator: $fieldSeparator, swapQA: $swapQA)) {
+                    .navigationBarItems(trailing: NavigationLink(destination: CSVConfirmationView(viewModel: viewModel, folder: folder, csvText: $csvText, lineSeparator: $lineSeparator, fieldSeparator: $fieldSeparator, swapQA: $swapQA, dismiss: dismiss)) {
                         Text("Next")
                             .foregroundColor(.blue)
                     })
+                    .navigationTitle("Add New Cards")
                 }
             }
-            .navigationTitle("Add New Card")
             .navigationBarItems(leading: Button("Cancel") {
-                presentationMode.wrappedValue.dismiss()
+                dismiss()
             })
         }
     }

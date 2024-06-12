@@ -14,14 +14,14 @@ struct CSVConfirmationView: View {
     @Binding var lineSeparator: String
     @Binding var fieldSeparator: String
     @Binding var swapQA: Bool
-    @Environment(\.presentationMode) var presentationMode
+    var dismiss:DismissAction
     
     var body: some View {
         VStack {
             List {
-                let lines = csvText.components(separatedBy: lineSeparator)
+                let lines = csvText.components(separatedBy: convertEscapedString(lineSeparator))
                 ForEach(lines, id: \.self) { line in
-                    let components = line.components(separatedBy: fieldSeparator)
+                    let components = line.components(separatedBy: convertEscapedString(fieldSeparator))
                     if components.count == 2 {
                         let question = String(components[0]).trimmingCharacters(in: .whitespacesAndNewlines)
                         let answer = String(components[1]).trimmingCharacters(in: .whitespacesAndNewlines)
@@ -44,7 +44,7 @@ struct CSVConfirmationView: View {
             .navigationTitle("Confirm CSV Data")
             .navigationBarItems(trailing: Button("Add Cards") {
                 viewModel.addCardsFromCSV(to: folder, csvString: csvText, lineSeparator: lineSeparator, fieldSeparator: fieldSeparator, swapQA: swapQA)
-                presentationMode.wrappedValue.dismiss()
+                dismiss()
             })
         }
     }

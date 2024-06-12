@@ -30,8 +30,12 @@ class FolderViewModel: ObservableObject {
     }
     
     func nextCard() {
-        guard let currentFolderIndex = currentFolderIndex else { return }
-        
+        print("nextCard呼ばれてる")
+        guard let currentFolderIndex = currentFolderIndex else {
+            print("currentFolderIndexない")
+            return
+        }
+        print("currentFolderIndexある")
         let now = Date()
         let dueCards = folders[currentFolderIndex].cards.filter { $0.nextReviewDate <= now }
         
@@ -160,9 +164,11 @@ class FolderViewModel: ObservableObject {
     }
 
     func addCardsFromCSV(to folder: Folder, csvString: String, lineSeparator: String, fieldSeparator: String, swapQA: Bool) {
-        let lines = csvString.components(separatedBy: lineSeparator)
+        let lines = csvString.components(separatedBy: convertEscapedString(lineSeparator))
+        print(lines)
         for line in lines {
-            let components = line.components(separatedBy: fieldSeparator)
+            let components = line.components(separatedBy: convertEscapedString(fieldSeparator))
+            print(components)
             if components.count == 2 {
                 let question = components[0].trimmingCharacters(in: .whitespacesAndNewlines)
                 let answer = components[1].trimmingCharacters(in: .whitespacesAndNewlines)

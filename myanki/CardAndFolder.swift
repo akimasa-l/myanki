@@ -12,6 +12,7 @@ struct Card: Identifiable, Codable, Equatable, Hashable {
     var question: String
     var answer: String
     var nextReviewDate: Date
+    var incorrectCount: Int = 0
     var interval: TimeInterval
     
     init(id: UUID = UUID(), question: String, answer: String, nextReviewDate: Date = Date(), interval: TimeInterval = 0) {

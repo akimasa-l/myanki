@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F0BA1FB2C1AB0C000E471C7 /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0BA1FA2C1AB0C000E471C7 /* CardDetailView.swift */; };
 		3F0FD8522C1949B2004929AB /* CSVConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0FD8512C1949B2004929AB /* CSVConfirmationView.swift */; };
 		3F1F88BE2C188A54004203A3 /* EditCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1F88BD2C188A54004203A3 /* EditCardView.swift */; };
 		3F1F88C02C189077004203A3 /* AddCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1F88BF2C189077004203A3 /* AddCardView.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F0BA1FA2C1AB0C000E471C7 /* CardDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailView.swift; sourceTree = "<group>"; };
 		3F0FD8512C1949B2004929AB /* CSVConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVConfirmationView.swift; sourceTree = "<group>"; };
 		3F1F88BD2C188A54004203A3 /* EditCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardView.swift; sourceTree = "<group>"; };
 		3F1F88BF2C189077004203A3 /* AddCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardView.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				3F806E3E2C17FD7500B14269 /* ReviewView.swift */,
 				3F2BAF2F2C172BF9002EFA85 /* CardAndFolder.swift */,
 				3F2BAF312C172C35002EFA85 /* FolderViewModel.swift */,
+				3F0BA1FA2C1AB0C000E471C7 /* CardDetailView.swift */,
 				3F806E402C17FDD300B14269 /* FolderDetailView.swift */,
 				3FB4328C2C19DA2100714031 /* FolderDetailContainerView.swift */,
 				3F68B3B72C19935D00CDC06F /* PenKitView.swift */,
@@ -185,6 +188,7 @@
 				3FB4328D2C19DA2100714031 /* FolderDetailContainerView.swift in Sources */,
 				3F2BAF302C172BFA002EFA85 /* CardAndFolder.swift in Sources */,
 				3F2BAF232C172AB8002EFA85 /* ContentView.swift in Sources */,
+				3F0BA1FB2C1AB0C000E471C7 /* CardDetailView.swift in Sources */,
 				3F68B3B62C197A3A00CDC06F /* convertEscapedString.swift in Sources */,
 				3F68B3B82C19935D00CDC06F /* PenKitView.swift in Sources */,
 				3F2BAF322C172C35002EFA85 /* FolderViewModel.swift in Sources */,

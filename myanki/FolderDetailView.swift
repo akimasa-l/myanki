@@ -17,10 +17,10 @@ struct FolderDetailView: View {
     @State private var newFolderName = ""
     @State private var startReview = false
     @State private var isEditingFolderName = false
-//    let folder: Folder
+    //    let folder: Folder
     
     var body: some View {
-        if let folder=viewModel.selectedFolder{
+        if let folder = viewModel.selectedFolder{
             VStack {
                 Form {
                     // フォルダー名を表示
@@ -42,12 +42,7 @@ struct FolderDetailView: View {
                         ForEach(folder.cards) { card in
                             VStack(alignment: .leading) {
                                 HStack {
-                                    VStack(alignment: .leading) {
-                                        Text(card.question)
-                                            .font(.headline)
-                                        Text(card.answer)
-                                            .font(.subheadline)
-                                    }
+                                    CardDetailView(card: card)
                                     Spacer()
                                     Button(action: {
                                         editingCard = card
@@ -59,6 +54,7 @@ struct FolderDetailView: View {
                                     }
                                 }
                             }
+                            
                         }
                         .onDelete { offsets in
                             viewModel.removeCard(at: offsets, from: folder)
@@ -104,6 +100,6 @@ struct FolderDetailView: View {
                 AddCardView(folder: folder)
             }
         }
-        }
+    }
 }
 

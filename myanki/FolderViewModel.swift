@@ -63,11 +63,11 @@ class FolderViewModel: ObservableObject {
         
         switch difficulty {
         case "easy":
-            newInterval = folders[currentFolderIndex].cards[currentCardIndex].interval == 0 ? 60 * 60 : folders[currentFolderIndex].cards[currentCardIndex].interval * 2
+            newInterval = folders[currentFolderIndex].cards[currentCardIndex].interval == 0 ? 60 * 60 : folders[currentFolderIndex].cards[currentCardIndex].interval * 10
         case "good":
-            newInterval = folders[currentFolderIndex].cards[currentCardIndex].interval == 0 ? 30 * 60 : folders[currentFolderIndex].cards[currentCardIndex].interval * 1.5
+            newInterval = folders[currentFolderIndex].cards[currentCardIndex].interval == 0 ? 30 * 60 : folders[currentFolderIndex].cards[currentCardIndex].interval * 4
         case "hard":
-            newInterval = folders[currentFolderIndex].cards[currentCardIndex].interval == 0 ? 10 * 60 : folders[currentFolderIndex].cards[currentCardIndex].interval
+            newInterval = folders[currentFolderIndex].cards[currentCardIndex].interval == 0 ? 10 * 60 : folders[currentFolderIndex].cards[currentCardIndex].interval * 2
         case "again":
             newInterval = 1 * 60
         default:
@@ -88,11 +88,11 @@ class FolderViewModel: ObservableObject {
         
         switch difficulty {
         case "easy":
-            interval = currentCard.interval == 0 ? 60 * 60 : currentCard.interval * 2
+            interval = currentCard.interval == 0 ? 60 * 60 : currentCard.interval * 10
         case "good":
-            interval = currentCard.interval == 0 ? 30 * 60 : currentCard.interval * 1.5
+            interval = currentCard.interval == 0 ? 30 * 60 : currentCard.interval * 4
         case "hard":
-            interval = currentCard.interval == 0 ? 10 * 60 : currentCard.interval
+            interval = currentCard.interval == 0 ? 10 * 60 : currentCard.interval * 2
         case "again":
             interval = 1 * 60
         default:

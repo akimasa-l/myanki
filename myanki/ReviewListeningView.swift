@@ -1,16 +1,28 @@
 //
-//  ReviewView.swift
+//  ReviewListeningView.swift
 //  myanki
 //
-//  Created by 劉明正 on 2024/06/11.
+//  Created by 山田智貴 on 2024/07/20.
 //
 
 import SwiftUI
+import AVFoundation
 
-struct ReviewView: View {
+struct ReviewListeningView: View {
     @EnvironmentObject var viewModel: FolderViewModel
     let folder: Folder
     @State var id = 0
+    private let synthesizer = AVSpeechSynthesizer() // Initialize the speech synthesizer
+    
+    private func speakText(text: String, language: String) {
+        let language = language
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.voice = AVSpeechSynthesisVoice(language: language)
+        utterance.rate = AVSpeechUtteranceDefaultSpeechRate
+        synthesizer.speak(utterance)
+    }
+    
+    @State var is_question_chinese = true
     
     var body: some View {
         VStack {
@@ -20,7 +32,24 @@ struct ReviewView: View {
                     .padding()
             } else {
                 if let currentCard = viewModel.currentCard {
-                    Text(viewModel.showAnswer ? "A: " + currentCard.answer : "Q: " + currentCard.question)
+                    
+                    Button(action: {
+                        speakText(text: (currentCard.is_question_chinese ? currentCard.question : currentCard.answer), language: "zh-CN")
+                    }) {
+                        Image(systemName: (!currentCard.is_question_chinese) && !viewModel.showAnswer ? "speaker.slash" : "speaker.wave.2") // Use a system icon or custom image
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 80, height: 80)
+                                .padding(20)
+                                .foregroundStyle(.blue)
+                                .background(.white)
+                                .clipShape(Circle())
+                                .shadow(radius: 10)
+                    }
+                    .disabled((!currentCard.is_question_chinese) && !viewModel.showAnswer)
+                    .frame(width: 120, height: 120)
+                    
+                    Text(currentCard.is_question_chinese ? (viewModel.showAnswer ? "Q: " + currentCard.question + "\nA: " + currentCard.answer : "reveal an answer") : (viewModel.showAnswer ? "A: " + currentCard.answer : "Q: " + currentCard.question))
                         .font(.largeTitle)
                         .padding()
                         .frame(width: 300, height: 200)
@@ -96,3 +125,4 @@ struct ReviewView: View {
         }
     }
 }
+

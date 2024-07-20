@@ -25,6 +25,7 @@
 		3F806E412C17FDD300B14269 /* FolderDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F806E402C17FDD300B14269 /* FolderDetailView.swift */; };
 		3F806E432C18020B00B14269 /* EditFolderNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F806E422C18020B00B14269 /* EditFolderNameView.swift */; };
 		3FB4328D2C19DA2100714031 /* FolderDetailContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB4328C2C19DA2100714031 /* FolderDetailContainerView.swift */; };
+		66F0B2122C4BF0F800693DA1 /* ReviewListeningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F0B2112C4BF0F800693DA1 /* ReviewListeningView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		3F806E402C17FDD300B14269 /* FolderDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDetailView.swift; sourceTree = "<group>"; };
 		3F806E422C18020B00B14269 /* EditFolderNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFolderNameView.swift; sourceTree = "<group>"; };
 		3FB4328C2C19DA2100714031 /* FolderDetailContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDetailContainerView.swift; sourceTree = "<group>"; };
+		66F0B2112C4BF0F800693DA1 /* ReviewListeningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewListeningView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 				3F806E422C18020B00B14269 /* EditFolderNameView.swift */,
 				3F1F88BD2C188A54004203A3 /* EditCardView.swift */,
 				3F806E3E2C17FD7500B14269 /* ReviewView.swift */,
+				66F0B2112C4BF0F800693DA1 /* ReviewListeningView.swift */,
 				3F2BAF2F2C172BF9002EFA85 /* CardAndFolder.swift */,
 				3F2BAF312C172C35002EFA85 /* FolderViewModel.swift */,
 				3F0BA1FA2C1AB0C000E471C7 /* CardDetailView.swift */,
@@ -195,6 +198,7 @@
 				3F2BAF212C172AB8002EFA85 /* myankiApp.swift in Sources */,
 				3F0FD8522C1949B2004929AB /* CSVConfirmationView.swift in Sources */,
 				3F1F88C42C1890FB004203A3 /* SidebarFolderView.swift in Sources */,
+				66F0B2122C4BF0F800693DA1 /* ReviewListeningView.swift in Sources */,
 				3F806E432C18020B00B14269 /* EditFolderNameView.swift in Sources */,
 				3F1F88C02C189077004203A3 /* AddCardView.swift in Sources */,
 			);
@@ -326,7 +330,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"myanki/Preview Content\"";
-				DEVELOPMENT_TEAM = 33DN96GXH8;
+				DEVELOPMENT_TEAM = PG3RA39QVU;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -364,7 +368,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"myanki/Preview Content\"";
-				DEVELOPMENT_TEAM = 33DN96GXH8;
+				DEVELOPMENT_TEAM = PG3RA39QVU;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

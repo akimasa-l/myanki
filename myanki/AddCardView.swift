@@ -16,6 +16,7 @@ struct AddCardView: View {
     @State private var lineSeparator = "\\n"
     @State private var fieldSeparator = ","
     @State private var swapQA = false
+    @State private var is_question_chinese = true
     @State private var showingCSVConfirmation = false
     let folder: Folder
     @Environment(\.isPresented) var isPresented
@@ -40,7 +41,7 @@ struct AddCardView: View {
                         TextField("Answer", text: $answer)
                     }
                     .navigationBarItems(trailing: Button("Add Card") {
-                        viewModel.addCard(to: folder, question: question, answer: answer)
+                        viewModel.addCard(to: folder, question: question, answer: answer, is_question_chinese: is_question_chinese)
                         dismiss()
                     })
                     .navigationTitle("Add New Card")
@@ -58,7 +59,10 @@ struct AddCardView: View {
                     Section {
                         Toggle("Swap Q and A", isOn: $swapQA)
                     }
-                    .navigationBarItems(trailing: NavigationLink(destination: CSVConfirmationView(folder: folder, csvText: $csvText, lineSeparator: $lineSeparator, fieldSeparator: $fieldSeparator, swapQA: $swapQA,dismiss: dismiss)) {
+                    Section {
+                        Toggle("Chinese Question", isOn: $is_question_chinese)
+                    }
+                    .navigationBarItems(trailing: NavigationLink(destination: CSVConfirmationView(folder: folder, csvText: $csvText, lineSeparator: $lineSeparator, fieldSeparator: $fieldSeparator, swapQA: $swapQA, is_question_chinese: $is_question_chinese, dismiss: dismiss)) {
                         Text("Next")
                             .foregroundColor(.blue)
                     })

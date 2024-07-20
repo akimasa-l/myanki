@@ -64,12 +64,21 @@ struct FolderDetailView: View {
                         }
                     }
                 }
-                NavigationLink(destination: ReviewView(folder: folder)) {
-                    Text("Start Review")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                HStack {
+                    NavigationLink(destination: ReviewListeningView(folder: folder)) {
+                        Text("Start Listening")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    NavigationLink(destination: ReviewView(folder: folder)) {
+                        Text("Start Review")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
                 }
             }
             .toolbar {

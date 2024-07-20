@@ -103,9 +103,9 @@ class FolderViewModel: ObservableObject {
         return "\(Int(minutes))分後"
     }
     
-    func addCard(to folder: Folder, question: String, answer: String) {
+    func addCard(to folder: Folder, question: String, answer: String, is_question_chinese: Bool) {
         if let index = folders.firstIndex(where: { $0.id == folder.id }) {
-            let newCard = Card(question: question, answer: answer)
+            let newCard = Card(question: question, answer: answer, is_question_chinese: is_question_chinese)
             folders[index].cards.append(newCard)
             saveFolders()
         }
@@ -165,7 +165,7 @@ class FolderViewModel: ObservableObject {
         }
     }
     
-    func addCardsFromCSV(to folder: Folder, csvString: String, lineSeparator: String, fieldSeparator: String, swapQA: Bool) {
+    func addCardsFromCSV(to folder: Folder, csvString: String, lineSeparator: String, fieldSeparator: String, swapQA: Bool, is_question_chinese: Bool) {
         let lines = csvString.components(separatedBy: convertEscapedString(lineSeparator))
         print(lines)
         for line in lines {
@@ -175,9 +175,9 @@ class FolderViewModel: ObservableObject {
                 let question = components[0].trimmingCharacters(in: .whitespacesAndNewlines)
                 let answer = components[1].trimmingCharacters(in: .whitespacesAndNewlines)
                 if swapQA {
-                    addCard(to: folder, question: answer, answer: question)
+                    addCard(to: folder, question: answer, answer: question, is_question_chinese: is_question_chinese)
                 } else {
-                    addCard(to: folder, question: question, answer: answer)
+                    addCard(to: folder, question: question, answer: answer, is_question_chinese: is_question_chinese)
                 }
             }
         }

@@ -14,6 +14,7 @@ struct CSVConfirmationView: View {
     @Binding var lineSeparator: String
     @Binding var fieldSeparator: String
     @Binding var swapQA: Bool
+    @Binding var is_question_chinese: Bool
     var dismiss:DismissAction
     
     var body: some View {
@@ -43,7 +44,7 @@ struct CSVConfirmationView: View {
             }
             .navigationTitle("Confirm CSV Data")
             .navigationBarItems(trailing: Button("Add Cards") {
-                viewModel.addCardsFromCSV(to: folder, csvString: csvText, lineSeparator: lineSeparator, fieldSeparator: fieldSeparator, swapQA: swapQA)
+                viewModel.addCardsFromCSV(to: folder, csvString: csvText, lineSeparator: lineSeparator, fieldSeparator: fieldSeparator, swapQA: swapQA, is_question_chinese: is_question_chinese)
                 dismiss()
             })
         }

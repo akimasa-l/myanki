@@ -14,13 +14,15 @@ struct Card: Identifiable, Codable, Equatable, Hashable {
     var nextReviewDate: Date
     var incorrectCount: Int = 0
     var interval: TimeInterval
+    var is_question_chinese: Bool
     
-    init(id: UUID = UUID(), question: String, answer: String, nextReviewDate: Date = Date(), interval: TimeInterval = 0) {
+    init(id: UUID = UUID(), question: String, answer: String, nextReviewDate: Date = Date(), interval: TimeInterval = 0, is_question_chinese: Bool = true) {
         self.id = id
         self.question = question
         self.answer = answer
         self.nextReviewDate = nextReviewDate
         self.interval = interval
+        self.is_question_chinese = is_question_chinese
     }
 }
 

@@ -6,9 +6,21 @@
 //
 
 import SwiftUI
+import AVFoundation
+
+func fayin(str: String, synthesizer: AVSpeechSynthesizer){
+    let f=str.components(separatedBy: " ")
+    if f.count == 1 || f.count == 2{
+        let text = AVSpeechUtterance(string: f[0])
+        let language = AVSpeechSynthesisVoice(language: "zh-CN")
+        text.voice = language
+        synthesizer.speak(text)
+    }
+}
 
 struct ReviewView: View {
     @EnvironmentObject var viewModel: FolderViewModel
+    let synthesizer = AVSpeechSynthesizer()
     let folder: Folder
     @State var id = 0
     
@@ -22,6 +34,7 @@ struct ReviewView: View {
                 if let currentCard = viewModel.currentCard {
                     Text(viewModel.showAnswer ? currentCard.answer : currentCard.question)
                         .font(.largeTitle)
+                        .font(.custom("STKaiti",size:20)) // フォント変わんないんだけどなんで？？
                         .padding()
                         .frame(width: 300, height: 200)
                         .background(Color.blue)
@@ -29,6 +42,9 @@ struct ReviewView: View {
                         .cornerRadius(10)
                         .onTapGesture {
                             viewModel.flipCard()
+                            if viewModel.showAnswer{
+                                fayin(str: currentCard.answer, synthesizer: synthesizer)
+                            }
                         }
                     
                     PenKitView()

@@ -20,7 +20,7 @@ struct FolderDetailView: View {
     //    let folder: Folder
     
     var body: some View {
-        if let folder = viewModel.selectedFolder{
+        if let folder = viewModel.selectedFolder {
             VStack {
                 Form {
                     // フォルダー名を表示

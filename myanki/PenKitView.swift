@@ -11,19 +11,23 @@ import PencilKit
 struct PenKitView: UIViewRepresentable {
     typealias UIViewType = PKCanvasView
     let toolPicker = PKToolPicker()
+//    let eraseAll: ()->Void
+    let pkcView = PKCanvasView()
     
     func makeUIView(context: Context) -> PKCanvasView {
-        let pkcView = PKCanvasView()
         toolPicker.addObserver(pkcView)
         toolPicker.setVisible(true, forFirstResponder: pkcView)
         pkcView.becomeFirstResponder()
         return pkcView
     }
-    
+
     func updateUIView(_ uiView: PKCanvasView, context: Context) {
         if uiView.isHidden{
             toolPicker.setVisible(false, forFirstResponder: uiView)
         }
+    }
+    func eraseAll(){
+        pkcView.drawing = PKDrawing()
     }
     
 }

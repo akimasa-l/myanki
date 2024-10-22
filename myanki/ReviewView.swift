@@ -22,7 +22,6 @@ struct ReviewView: View {
     @EnvironmentObject var viewModel: FolderViewModel
     let synthesizer = AVSpeechSynthesizer()
     let folder: Folder
-    @State var id = 0
     
     var body: some View {
         VStack {
@@ -33,8 +32,9 @@ struct ReviewView: View {
             } else {
                 if let currentCard = viewModel.currentCard {
                     Text(viewModel.showAnswer ? currentCard.answer : currentCard.question)
-                        .font(.largeTitle)
-                        .font(.custom("STKaiti",size:20)) // フォント変わんないんだけどなんで？？
+//                        .font(.largeTitle)
+//                        .font(.custom("STKaiti",size:20)) // フォント変わんないんだけどなんで？？
+                        .font(.custom("STKaiti", size: 60)) // ついに変わりました、ありがとうございます！
                         .padding()
                         .frame(width: 300, height: 200)
                         .background(Color.blue)
@@ -46,16 +46,14 @@ struct ReviewView: View {
                                 fayin(str: currentCard.answer, synthesizer: synthesizer)
                             }
                         }
-                    
-                    PenKitView()
+                    let penKitView:PenKitView=PenKitView()
+                    penKitView
                         .frame(width: 500, height: 200)
                         .border(Color.black)
-                        .id(id)
-                    
                     HStack {
                         Button(action: {
                             viewModel.reviewCard(difficulty: "again")
-                            id+=1
+                            penKitView.eraseAll()
                         }) {
                             Text("Again\n(\(viewModel.nextReviewTime(for: "again")))")
                                 .padding()
@@ -67,7 +65,7 @@ struct ReviewView: View {
                         
                         Button(action: {
                             viewModel.reviewCard(difficulty: "hard")
-                            id+=1
+                            penKitView.eraseAll()
                         }) {
                             Text("Hard\n(\(viewModel.nextReviewTime(for: "hard")))")
                                 .padding()
@@ -79,7 +77,7 @@ struct ReviewView: View {
                         
                         Button(action: {
                             viewModel.reviewCard(difficulty: "good")
-                            id+=1
+                            penKitView.eraseAll()
                         }) {
                             Text("Good\n(\(viewModel.nextReviewTime(for: "good")))")
                                 .padding()
@@ -91,7 +89,7 @@ struct ReviewView: View {
                         
                         Button(action: {
                             viewModel.reviewCard(difficulty: "easy")
-                            id+=1
+                            penKitView.eraseAll()
                         }) {
                             Text("Easy\n(\(viewModel.nextReviewTime(for: "easy")))")
                                 .padding()

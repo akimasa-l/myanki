@@ -21,6 +21,7 @@ func fayin(str: String, synthesizer: AVSpeechSynthesizer){
 struct ReviewView: View {
     @EnvironmentObject var viewModel: FolderViewModel
     let synthesizer = AVSpeechSynthesizer()
+    let penKitView:PenKitView=PenKitView()
     let folder: Folder
     
     var body: some View {
@@ -46,7 +47,7 @@ struct ReviewView: View {
                                 fayin(str: currentCard.answer, synthesizer: synthesizer)
                             }
                         }
-                    let penKitView:PenKitView=PenKitView()
+                   
                     penKitView
                         .frame(width: 500, height: 200)
                         .border(Color.black)

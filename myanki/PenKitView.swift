@@ -28,6 +28,8 @@ struct PenKitView: UIViewRepresentable {
     }
     func eraseAll(){
         pkcView.drawing = PKDrawing()
+        pkcView.drawing = PKDrawing()
+        print("erase")
     }
     
 }
